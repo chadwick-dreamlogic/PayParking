@@ -26,4 +26,5 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('create-package', 'PackageController@createPackage');
 
     $router->get('get-user-transactions/{user_id}', 'TransactionController@getUserTransactions');
+    $router->post('buy-pass', 'TransactionController@buyPass');
 });

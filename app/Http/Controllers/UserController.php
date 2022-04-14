@@ -17,7 +17,7 @@ class UserController extends Controller
     public function getUserDetails($vehicle_reg_no)
     {
         $vehicle_reg_no = str_replace('%20', ' ', $vehicle_reg_no);
-        return response()->json(User::where('vehicle_reg_no', '=', $vehicle_reg_no)->get());
+        return response()->json(User::select('name', 'vehicle_reg_no', 'phone_no', 'created_at', 'updated_at')->where('vehicle_reg_no', '=', $vehicle_reg_no)->get());
     }
 
     public function createUser(Request $request) {
@@ -34,6 +34,7 @@ class UserController extends Controller
             'vehicle_reg_no'    => $request->vehicle_reg_no    
         ];     
         $user = User::create($data);
+        unset($user->password_hash);
         return response()->json($user, 201);
     }
 }

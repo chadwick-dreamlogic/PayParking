@@ -12,11 +12,12 @@ class PackageController extends Controller
      * @return void
      */
 
+    // get all packages
     public function getPackage()
     {
         return response()->json(Package::get(), 200);
     }
-
+    // create a new package
     public function createPackage(Request $request) {
         $this->validate($request, [
             'name'      => 'required',
