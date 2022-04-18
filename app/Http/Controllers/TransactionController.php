@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
@@ -25,13 +26,15 @@ class TransactionController extends Controller
             'userId'            => 'required',
             'passId'            => 'required',
             'amount'            => 'required',
-            'bankTransactionId' => 'required'
+            'bankTransactionId' => 'required',
+            'status'            => 'required'
         ]);
         $data = [
             'user_id'               => $request->userId,
             'pass_id'               => $request->passId,
             'amount'                => $request->amount,
-            'bank_transaction_id'   => $request->bankTransactionId
+            'bank_transaction_id'   => $request->bankTransactionId,
+            'status'                => $request->status
         ];  
         $transaction = Transaction::create($data);
         return response()->json($transaction, 201);

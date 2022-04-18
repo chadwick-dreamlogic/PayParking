@@ -19,6 +19,8 @@ class CreateUsersTable extends Migration
             $table->string('password_hash');
             $table->string('vehicle_reg_no');
             $table->string('phone_no');
+            $table->string('car_model');
+            $table->string('remember_token')->nullable();
             $table->timestamps();
         });
     }

@@ -17,8 +17,9 @@ class CreateTransactionsTable extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('pass_id');
-            $table->integer('bank_transaction_id');
+            $table->string('bank_transaction_id');
             $table->decimal('amount', $precision = 8, $scale = 2);
+            $table->string('status');
             $table->timestamps();
         });
     }
