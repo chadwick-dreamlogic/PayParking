@@ -26,15 +26,20 @@ class UserController extends Controller
                                         ->select('transactions.*', 'packages.validity', 'packages.price', 'packages.name')
                                         ->limit(1)
                                         ->get();
-        $creation_date = strtotime($user_transactions[0]->created_at);
-        $valid_till = strtotime($user_transactions[0]->validity, $creation_date);
-        $user[0]->validTill = date('Y-m-d H:i:s', $valid_till);
-        $user[0]->status = $user_transactions[0]->status;
-        $user[0]->amount = $user_transactions[0]->price;
-        $user[0]->passName = $user_transactions[0]->name;
-        $user[0]->car = $user[0]->car_model;
-        unset($user[0]->car_model);
-        return response()->json($user, 200);
+        if(count($user_transactions)) {
+            $creation_date = strtotime($user_transactions[0]->created_at);
+            $valid_till = strtotime($user_transactions[0]->validity, $creation_date);
+            $user[0]->validTill = date('Y-m-d H:i:s', $valid_till);
+            $user[0]->status = $user_transactions[0]->status;
+            $user[0]->amount = $user_transactions[0]->price;
+            $user[0]->passName = $user_transactions[0]->name;
+            $user[0]->car = $user[0]->car_model;
+            unset($user[0]->car_model);
+            return response()->json($user, 200);
+        }
+        else {
+            return response()->json($user, 200);
+        }       
     }
 
     public function createUser(Request $request) {
