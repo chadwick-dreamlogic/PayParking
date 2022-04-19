@@ -60,4 +60,10 @@ class UserController extends Controller
         $user->save();
         return response()->json($user, 201);
     }
+
+    public function listUsers()
+    {
+        $users = User::all();
+        return view('pages/users', ['users' => $users, 'path'=>'users']);
+    }
 }
