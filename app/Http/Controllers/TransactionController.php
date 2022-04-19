@@ -16,7 +16,11 @@ class TransactionController extends Controller
     // get user transactions by user id
     public function getUserTransactions($user_id)
     {
-        return response()->json(Transaction::where('user_id', '=', $user_id)->latest()->get(), 200);
+        return response()->json(Transaction::where('user_id', '=', $user_id)
+                                ->join('packages', 'packages.id', '=', 'transactions.pass_id')
+                                ->orderByDesc('transactions.created_at')
+                                ->select('transactions.*', 'packages.name as item_name')
+                                ->get(), 200);
     }
 
     // enter transaction details in transactions table on successful payment

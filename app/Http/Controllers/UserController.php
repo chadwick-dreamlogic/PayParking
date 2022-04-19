@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Crypt;
 use App\Models\User;
-use App\Models\Transaction;
 use App\Models\Package;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class UserController extends Controller
 {
@@ -27,19 +27,16 @@ class UserController extends Controller
                                         ->limit(1)
                                         ->get();
         if(count($user_transactions)) {
-            $creation_date = strtotime($user_transactions[0]->created_at);
-            $valid_till = strtotime($user_transactions[0]->validity, $creation_date);
+            $creation_date      = strtotime($user_transactions[0]->created_at);
+            $valid_till         = strtotime($user_transactions[0]->validity, $creation_date);
             $user[0]->validTill = date('Y-m-d H:i:s', $valid_till);
-            $user[0]->status = $user_transactions[0]->status;
-            $user[0]->amount = $user_transactions[0]->price;
-            $user[0]->passName = $user_transactions[0]->name;
-            $user[0]->car = $user[0]->car_model;
+            $user[0]->status    = $user_transactions[0]->status;
+            $user[0]->amount    = $user_transactions[0]->price;
+            $user[0]->passName  = $user_transactions[0]->name;
+            $user[0]->car       = $user[0]->car_model;
             unset($user[0]->car_model);
-            return response()->json($user, 200);
         }
-        else {
-            return response()->json($user, 200);
-        }       
+            return response()->json($user, 200);     
     }
 
     public function createUser(Request $request) {
@@ -56,8 +53,9 @@ class UserController extends Controller
             'phone_no'          => $request->phone_no,
             'vehicle_reg_no'    => $request->vehicle_reg_no,
             'car_model'         => $request->car,
-        ];     
-        $user = new User($data);
+        ];   
+        // creating user object to store data since password_hash is a hidden field, thus cannot be assigned directly using create($data)  
+        $user = new User($data);    
         $user->password_hash = $data["password_hash"];
         $user->save();
         return response()->json($user, 201);
