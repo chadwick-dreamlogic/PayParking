@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Package;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class AuthController extends Controller
 {
@@ -22,7 +23,7 @@ class AuthController extends Controller
             'username'  => $request->username,
             'password'  => $request->password
         ];    
-        return redirect('views/home');
+        return redirect('admin/home');
     }
 
 }

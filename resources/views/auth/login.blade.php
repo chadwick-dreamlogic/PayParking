@@ -10,7 +10,7 @@
                 <h1>Login</h1>
             </div>
             <div class="fields">
-                <form action="/api/auth/login" method="post">
+                <form action="/admin/auth/login" method="post">
                     <div class="form-group">
                         <label id="usernameLabel" for="usernameTextField" class="form-label"> Username
                             <input id="usernameTextField" type="text" name="username" class="form-control" placeholder="username" required>

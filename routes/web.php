@@ -14,35 +14,38 @@
 */
 
 $router->get('/', function () use ($router) {
-    return redirect('/views/login');
+    return redirect('/admin/login');
 });
 
+// App Routes
 $router->group(['prefix' => 'api'], function () use ($router) {
-    $router->post('auth/login', 'AuthController@login');
+    $router->get('get-user-details/{vehicle_reg_no}', 'Api\UserController@getUserDetails');
 
-    $router->get('get-user-details/{vehicle_reg_no}', 'UserController@getUserDetails');
-    $router->post('create-user', 'UserController@createUser');
-
-    $router->get('get-package', 'PackageController@getPackage');
-    $router->post('create-package', 'PackageController@createPackage');
-    $router->put('update-package/{id}', 'PackageController@updatePackage');
-    $router->delete('delete-package/{id}', 'PackageController@deletePackage');
-
-    $router->get('get-user-transactions/{user_id}', 'TransactionController@getUserTransactions');
-    $router->post('buy-pass', 'TransactionController@buyPass');
-
+    $router->get('get-package', 'Api\PackageController@getPackage');
+        
+    $router->get('get-user-transactions/{user_id}', 'Api\TransactionController@getUserTransactions');
+    $router->post('buy-pass', 'Api\TransactionController@buyPass');   
 });
 
-$router->group(['prefix' => 'views'], function () use ($router) {
+// Admin Backend Routes
+$router->group(['prefix' => 'admin'], function () use ($router) {
     $router->get('login', function () {
         return view('auth/login');
     });  
+    $router->post('auth/login', 'Admin\AuthController@login');
 
     $router->get('home', function () {
         return view('pages/home', ['path'=>'home']);
     });
 
-    $router->get('packages', 'PackageController@listPackages');
+    $router->get('packages', 'Admin\PackageController@listPackages');
+    $router->post('create-package', 'Admin\PackageController@createPackage');
+    $router->put('update-package/{id}', 'Admin\PackageController@updatePackage');
+    $router->delete('delete-package/{id}', 'Admin\PackageController@deletePackage');
 
-    $router->get('users', 'UserController@listUsers');
+    $router->get('users', 'Admin\UserController@listUsers');  
+    $router->post('create-user', 'Admin\UserController@createUser');
+    $router->put('update-user/{id}', 'Admin\UserController@updateUser');
+    $router->delete('delete-user/{id}', 'Admin\UserController@deleteUser');
+   
 });

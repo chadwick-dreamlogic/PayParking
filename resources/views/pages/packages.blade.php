@@ -46,7 +46,7 @@
                                         </button>
                                     </span>
                                     <span class="ml-1">
-                                        <form action="/api/delete-package/{{$package->id}}" method="POST">
+                                        <form action="/admin/delete-package/{{$package->id}}" method="POST">
                                             <input type="hidden" name="_method" value="delete">
                                             <button type="submit" class="btn btn-danger">
                                                 <i class="fa fa-trash"></i>
@@ -72,7 +72,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="/api/create-package" method="post">
+                <form action="/admin/create-package" method="post">
                     <div class="modal-body">
                         <div class="form-group">
                             <label class="form-label" for="nameTextField"> Name
@@ -143,7 +143,7 @@
 </html>
 <script>
     function updateValues(package) {
-        document.getElementById("updatePackageForm").action = "/api/update-package/"+package.id
+        document.getElementById("updatePackageForm").action = "/admin/update-package/"+package.id
         document.getElementById("updateNameTextField").value = package.name;
         document.getElementById("updateValidityTextField").value = package.validity;
         document.getElementById("updatePriceTextField").value = package.price;
