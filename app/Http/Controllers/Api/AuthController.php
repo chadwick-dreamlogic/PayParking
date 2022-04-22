@@ -11,22 +11,40 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        $this->validate($request, [
-            'name'              => 'required',
-            'password'          => 'required',
-            'user_type'         => 'required',
-            'phone_no'          => 'required|unique:users',
-            'vehicle_reg_no'    => 'required',
-            'car_model'         => 'required'
-        ]);
-        $data = [
-            'name'              => $request->name,
-            'password_hash'     => Crypt::encryptString($request->password),
-            'user_type'         => $request->user_type,
-            'phone_no'          => $request->phone_no,
-            'vehicle_reg_no'    => $request->vehicle_reg_no,
-            'car_model'         => $request->car_model,
-        ];   
+        if($request->user_type == 'user') {
+            $this->validate($request, [
+                'name'              => 'required',
+                'password'          => 'required',
+                'user_type'         => 'required',
+                'phone_no'          => 'required|unique:users',
+                'vehicle_reg_no'    => 'required',
+                'car_model'         => 'required'
+            ]);
+            $data = [
+                'name'              => $request->name,
+                'password_hash'     => Crypt::encryptString($request->password),
+                'user_type'         => $request->user_type,
+                'phone_no'          => $request->phone_no,
+                'vehicle_reg_no'    => $request->vehicle_reg_no,
+                'car_model'         => $request->car_model
+            ];   
+        }
+        else if($request->user_type == 'agent') {
+            $this->validate($request, [
+                'name'              => 'required',
+                'password'          => 'required',
+                'user_type'         => 'required',
+                'username'          => 'required',
+                'phone_no'          => 'required|unique:users'                
+            ]);
+            $data = [
+                'name'              => $request->name,
+                'password_hash'     => Crypt::encryptString($request->password),
+                'user_type'         => $request->user_type,
+                'phone_no'          => $request->phone_no,
+                'username'          => $request->username
+            ];   
+        }
         // creating user object to store data since password_hash is a hidden field, thus cannot be assigned directly using create($data)  
         $user = new User($data);    
         $user->password_hash = $data["password_hash"];
