@@ -14,13 +14,15 @@ class AuthController extends Controller
         $this->validate($request, [
             'name'              => 'required',
             'password'          => 'required',
-            'phone_no'          => 'required|max:10|unique:users',
+            'user_type'         => 'required',
+            'phone_no'          => 'required|unique:users',
             'vehicle_reg_no'    => 'required',
             'car_model'         => 'required'
         ]);
         $data = [
             'name'              => $request->name,
             'password_hash'     => Crypt::encryptString($request->password),
+            'user_type'         => $request->user_type,
             'phone_no'          => $request->phone_no,
             'vehicle_reg_no'    => $request->vehicle_reg_no,
             'car_model'         => $request->car_model,

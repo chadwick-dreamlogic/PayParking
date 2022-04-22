@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Log;
 use App\Models\User;
 use App\Models\Package;
 use App\Models\Transaction;
@@ -17,7 +18,7 @@ class UserController extends Controller
      * @return void
      */
 
-    public function getUserDetails($vehicle_reg_no)
+    public function getUserDetails($vehicle_reg_no, $latitude, $longitude)
     {
         $vehicle_reg_no = str_replace('%20', ' ', $vehicle_reg_no);
         $user = User::where('vehicle_reg_no', '=', $vehicle_reg_no)->get();
@@ -27,6 +28,12 @@ class UserController extends Controller
                                         ->select('transactions.*', 'packages.validity', 'packages.price', 'packages.name')
                                         ->limit(1)
                                         ->get();
+        $log_data = [
+            "user_id"   => $user[0]->id,
+            "latitude"  => $latitude, 
+            "longitude" => $longitude
+        ];
+        Log::create($log_data);
         if(count($user_transactions)) {
             $creation_date      = strtotime($user_transactions[0]->created_at);
             $valid_till         = strtotime($user_transactions[0]->validity, $creation_date);

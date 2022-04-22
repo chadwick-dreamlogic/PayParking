@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class Log extends Model
 {
 
     /**
@@ -13,7 +13,7 @@ class User extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'vehicle_reg_no', 'phone_no', 'car_model', 'user_type'
+        'user_id', 'latitude', 'longitude'
     ];
 
     /**
@@ -21,7 +21,5 @@ class User extends Model
      *
      * @var array
      */
-    protected $hidden = [
-        'password_hash', 'remember_token',
-];
+    protected $hidden = [];
 }
