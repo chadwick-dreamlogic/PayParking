@@ -18,10 +18,9 @@ class UserController extends Controller
      * @return void
      */
 
-    public function getUserDetails($vehicle_reg_no, $latitude, $longitude)
+    public function searchUserDetails(Request $request)
     {
-        $vehicle_reg_no = str_replace('%20', ' ', $vehicle_reg_no);
-        $user = User::where('vehicle_reg_no', '=', $vehicle_reg_no)->get();
+        $user = User::where('vehicle_reg_no', '=', $request->vehicle_reg_no)->get();
         $user_transactions = Transaction::where('user_id', '=', $user[0]->id)
                                         ->join('packages', 'packages.id', '=', 'transactions.pass_id')
                                         ->orderByDesc('transactions.created_at')                                       
@@ -29,9 +28,9 @@ class UserController extends Controller
                                         ->limit(1)
                                         ->get();
         $log_data = [
-            "user_id"   => $user[0]->id,
-            "latitude"  => $latitude, 
-            "longitude" => $longitude
+            "user_id"   => $request->user_id,
+            "latitude"  => $$request->latitude, 
+            "longitude" => $$request->longitude
         ];
         Log::create($log_data);
         if(count($user_transactions)) {
