@@ -16,7 +16,7 @@
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('auth/register','Api\AuthController@register');
 
-    $router->post('search-user-details', 'Api\UserController@searcfUserDetails');
+    $router->post('search-user-details', 'Api\UserController@searchUserDetails');
 
     $router->get('get-package', 'Api\PackageController@getPackage');
 
