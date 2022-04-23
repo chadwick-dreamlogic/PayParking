@@ -29,8 +29,8 @@ class UserController extends Controller
                                         ->get();
         $log_data = [
             "user_id"   => $request->user_id,
-            "latitude"  => $$request->latitude, 
-            "longitude" => $$request->longitude
+            "latitude"  => $request->latitude, 
+            "longitude" => $request->longitude
         ];
         Log::create($log_data);
         if(count($user_transactions)) {

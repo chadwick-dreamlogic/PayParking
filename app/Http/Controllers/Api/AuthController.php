@@ -11,12 +11,15 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
+        $this->validate($request, [
+            'name'              => 'required',
+            'password'          => 'required',
+            'user_type'         => 'required',
+            'username'          => 'required',
+            'phone_no'          => 'required|unique:users'                
+        ]);
         if($request->user_type == 'user') {
             $this->validate($request, [
-                'name'              => 'required',
-                'password'          => 'required',
-                'user_type'         => 'required',
-                'phone_no'          => 'required|unique:users',
                 'vehicle_reg_no'    => 'required',
                 'car_model'         => 'required'
             ]);
@@ -30,13 +33,6 @@ class AuthController extends Controller
             ];   
         }
         else if($request->user_type == 'agent') {
-            $this->validate($request, [
-                'name'              => 'required',
-                'password'          => 'required',
-                'user_type'         => 'required',
-                'username'          => 'required',
-                'phone_no'          => 'required|unique:users'                
-            ]);
             $data = [
                 'name'              => $request->name,
                 'password_hash'     => Crypt::encryptString($request->password),
