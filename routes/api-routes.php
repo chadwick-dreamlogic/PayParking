@@ -21,5 +21,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('get-package', 'Api\PackageController@getPackage');
 
     $router->get('get-user-transactions/{user_id}', 'Api\TransactionController@getUserTransactions');
-    $router->post('buy-pass', 'Api\TransactionController@buyPass');   
+    $router->post('buy-pass', 'Api\TransactionController@buyPass');
+    
+    $router->get('vehicles', 'Api\VehicleController@getVehicles');
+    $router->post('register-vehicle', 'Api\VehicleController@register');
 });

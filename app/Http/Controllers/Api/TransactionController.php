@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
+use App\Models\Vehicle;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -33,13 +34,16 @@ class TransactionController extends Controller
             'passId'            => 'required',
             'amount'            => 'required',
             'bankTransactionId' => 'required',
+            'vehicleRegNo'      => 'required',
             'status'            => 'required'
         ]);
-        $user = User::where('phone_no', $request->phoneNo)->get();
-        if($user->isEmpty()) {
+        $user       = User::where('phone_no', $request->phoneNo)->get();
+        $vehicle    = Vehicle::where('reg_no', $request->vehicleRegNo)->get();
+        if(!$user->isEmpty() && !$vehicle->isEmpty()) {
             $data = [
-                'user_id'               => $user->id,
+                'user_id'               => $user[0]->id,
                 'pass_id'               => $request->passId,
+                'vehicle_id'            => $vehicle[0]->id,
                 'amount'                => $request->amount,
                 'bank_transaction_id'   => $request->bankTransactionId,
                 'status'                => $request->status
@@ -48,7 +52,7 @@ class TransactionController extends Controller
             return response()->json($transaction, 201);
         }
         else {
-            return response()->json(['message'=>'Phone number not found. Please register before attempting to buy pass.'], 404);
+            return response()->json(['message' => 'Phone number not found. Please register before attempting to buy pass.'], 404);
         }
     }
 

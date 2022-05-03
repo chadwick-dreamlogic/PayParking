@@ -18,7 +18,9 @@ class CreateTransactionsTable extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->index('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('vehicle_reg_no');
+            $table->bigInteger('vehicle_id')->unsigned();
+            $table->index('vehicle_id');
+            $table->foreign('vehicle_id')->references('id')->on('vehicles');
             $table->bigInteger('pass_id')->unsigned();
             $table->index('pass_id');
             $table->foreign('pass_id')->references('id')->on('packages');
@@ -40,6 +42,11 @@ class CreateTransactionsTable extends Migration
             $table->dropForeign('users_user_id_foreign');
             $table->dropIndex('users_user_id_index');
             $table->dropColumn('user_id');
+
+            $table->dropForeign('vehicles_vehicle_id_foreign');
+            $table->dropIndex('vehicles_vehicle_id_index');
+            $table->dropColumn('vehicle_id');
+
             $table->dropForeign('users_pass_id_foreign');
             $table->dropIndex('users_pass_id_index');
             $table->dropColumn('pass_id');

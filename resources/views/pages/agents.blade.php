@@ -41,7 +41,7 @@
                                             </button>
                                         </span>
                                         <span class="ml-1">
-                                            <form action="/agent/delete-agent/{{$agent->id}}" method="POST">
+                                            <form action="/admin/delete-agent/{{$agent->id}}" method="POST">
                                                 <input type="hidden" name="_method" value="delete">
                                                 <button type="submit" class="btn btn-danger">
                                                     <i class="fa fa-trash"></i>
