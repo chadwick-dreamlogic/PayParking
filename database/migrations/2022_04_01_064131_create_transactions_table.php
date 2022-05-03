@@ -18,6 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->index('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->string('vehicle_reg_no');
             $table->bigInteger('pass_id')->unsigned();
             $table->index('pass_id');
             $table->foreign('pass_id')->references('id')->on('packages');

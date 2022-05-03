@@ -1,47 +1,85 @@
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">  
-    <a class="navbar-brand" href="#"> Pay Parking </a>  
-    <button  
-        class="navbar-toggler"  
-        type="button"  
-        data-toggle="collapse"  
-        data-target="#navbarCollapse"  
-        aria-controls="navbarCollapse"  
-        aria-expanded="false"  
-        aria-label="Toggle navigation">  
-        <span class="navbar-toggler-icon"> </span>  
-    </button>  
-    <div class="collapse navbar-collapse" id="navbarCollapse">  
-        <ul class="navbar-nav mr-auto sidenav" id="navAccordion"> 
-            @if($path == 'home')
-                <li class="nav-item active">  
-                    <a class="nav-link" href="home"> Home </a>  
-                </li>  
-            @else
-                <li class="nav-item">  
-                    <a class="nav-link" href="home"> Home </a>  
-                </li>  
-            @endif
+<nav id="sidebar" class="bg-dark">
 
-            @if($path == 'packages')
-                <li class="nav-item active">  
-                    <a class="nav-link" href="packages"> Packages </a>  
-                </li> 
-            @else
-                <li class="nav-item">  
-                    <a class="nav-link" href="packages"> Packages </a>  
-                </li> 
-            @endif
-            
-            @if($path == 'users')
-                <li class="nav-item active">  
-                    <a class="nav-link" href="users"> Users </a>  
-                </li> 
-            @else
-                <li class="nav-item">  
-                    <a class="nav-link" href="users"> Users </a>  
-                </li> 
-            @endif
-                   
-        </ul>
+    <div class="container-fluid">
+
+        <button type="button" id="sidebarCollapse" class="btn btn-muted float-right">
+            <i class="fas fa-align-left"></i>
+        </button>
     </div>
+
+    <div class="sidebar-header">
+        <h3>Pay Parking</h3>
+        <strong>PP</strong>
+    </div>
+
+    <hr class="bg-light">
+    
+    <ul class="list-unstyled components">
+        @if($path == 'home')
+            <li class="text-dark bg-light">
+                <a href="home" aria-expanded="false">
+                    <i class="fas fa-home"></i>
+                    Home
+                </a>
+            </li>
+        @else
+            <li>
+                <a href="home" aria-expanded="false">
+                    <i class="fas fa-home"></i>
+                    Home
+                </a>
+            </li>
+        @endif
+
+        @if($path == 'packages')
+            <li class="text-dark bg-light">
+                <a href="packages">
+                    <i class="fas fa-briefcase"></i>
+                    Packages
+                </a>
+            </li>
+        @else
+            <li>
+                <a href="packages">
+                    <i class="fas fa-briefcase"></i>
+                    Packages
+                </a>
+            </li>
+        @endif
+            
+        @if($path == 'users')
+            <li class="text-dark bg-light">
+                <a href="users">
+                    <i class="fas fa-users"></i>
+                    Users
+                </a>
+            </li>
+        @else
+            <li>
+                <a href="users">
+                    <i class="fas fa-users"></i>
+                    Users
+                </a>
+            </li>
+        @endif
+            
+        @if($path == 'agents')
+            <li class="text-dark bg-light">
+                <a href="agents">
+                    <i class="fas fa-user-tie"></i>
+                    Agents
+                </a>
+            </li>
+        @else
+            <li>
+                <a href="agents">
+                    <i class="fas fa-user-tie"></i>
+                    Agents
+                </a>
+            </li>
+        @endif
+            
+
+    </ul>
+
 </nav>

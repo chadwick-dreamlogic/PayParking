@@ -37,4 +37,8 @@ $router->group(['prefix' => 'admin'], function () use ($router) {
     $router->put('update-user/{id}', 'Admin\UserController@updateUser');
     $router->delete('delete-user/{id}', 'Admin\UserController@deleteUser');
    
+    $router->get('agents', 'Admin\AgentController@listAgents');  
+    $router->post('create-agent', 'Admin\AgentController@createAgent');
+    $router->put('update-agent/{id}', 'Admin\AgentController@updateAgent');
+    $router->delete('delete-agent/{id}', 'Admin\AgentController@deleteAgent');
 });

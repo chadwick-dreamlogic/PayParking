@@ -5,11 +5,11 @@
    <title>Pay Parking: Home</title>
 </head>
     <body>
-        <div class="container">
-            <header class="row">
-                @include('includes.header')
-            </header>
+        <div class="wrapper">
+            @include('includes.header')
+            <div id="content">
 
+            </div>
         </div>
     </body>
 </html>

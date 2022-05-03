@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Transaction extends Model
+class User extends Model
 {
 
     /**
@@ -13,7 +13,7 @@ class Transaction extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'pass_id', 'bank_transaction_id', 'amount', 'status', 'vehicle_reg_no'
+        'name', 'username'
     ];
 
     /**
@@ -21,5 +21,7 @@ class Transaction extends Model
      *
      * @var array
      */
-    protected $hidden = [];
+    protected $hidden = [
+        'password_hash', 'remember_token',
+];
 }

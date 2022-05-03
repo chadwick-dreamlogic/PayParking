@@ -41,6 +41,7 @@ class UserController extends Controller
             $user[0]->amount    = $user_transactions[0]->price;
             $user[0]->passName  = $user_transactions[0]->name;
             $user[0]->car       = $user[0]->car_model;
+            $user[0]->registrationNumber = $user_transactions[0]->vehicle_reg_no;
             unset($user[0]->car_model);
         }
             return response()->json($user, 200);     
