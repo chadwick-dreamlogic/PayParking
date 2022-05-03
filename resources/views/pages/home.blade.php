@@ -7,7 +7,7 @@
     <body>
         <div class="wrapper">
             @include('includes.header')
-            <div id="content">
+            <div id="content" class="container-fluid">
 
             </div>
         </div>

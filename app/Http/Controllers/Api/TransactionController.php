@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\User;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -28,21 +29,27 @@ class TransactionController extends Controller
     public function buyPass(Request $request)
     {
         $this->validate($request, [
-            'userId'            => 'required',
+            'phoneNo'           => 'required',
             'passId'            => 'required',
             'amount'            => 'required',
             'bankTransactionId' => 'required',
             'status'            => 'required'
         ]);
-        $data = [
-            'user_id'               => $request->userId,
-            'pass_id'               => $request->passId,
-            'amount'                => $request->amount,
-            'bank_transaction_id'   => $request->bankTransactionId,
-            'status'                => $request->status
-        ];  
-        $transaction = Transaction::create($data);
-        return response()->json($transaction, 201);
+        $user = User::where('phone_no', $request->phoneNo)->get();
+        if($user->isEmpty()) {
+            $data = [
+                'user_id'               => $user->id,
+                'pass_id'               => $request->passId,
+                'amount'                => $request->amount,
+                'bank_transaction_id'   => $request->bankTransactionId,
+                'status'                => $request->status
+            ];  
+            $transaction = Transaction::create($data);
+            return response()->json($transaction, 201);
+        }
+        else {
+            return response()->json(['message'=>'Phone number not found. Please register before attempting to buy pass.'], 404);
+        }
     }
 
 }

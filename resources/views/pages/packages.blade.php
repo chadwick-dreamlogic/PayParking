@@ -7,7 +7,7 @@
     <body>
         <div class="wrapper">
             @include('includes.header')
-            <div id="content">
+            <div id="content" class="container-fluid">
                 <div class="my-1">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createPackageModal">
                         Create Package
