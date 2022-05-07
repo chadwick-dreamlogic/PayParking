@@ -2,7 +2,7 @@
 <html>
 <head>
    @include('includes.head')
-   <title>Pay Parking: Users</title>
+   <title>Pay Parking: Vehicles</title>
 </head>
     <body>
         <div class="wrapper">
@@ -10,8 +10,8 @@
             <div id="content" class="container-fluid">
                 <div class="my-1">
                     <button type="button" class="btn btn-primary" data-toggle="modal"
-                        data-target="#createUserModal">
-                        Create User
+                        data-target="#createVehicleModal">
+                        Create Vehicle
                     </button>
                 </div>
 
@@ -19,35 +19,39 @@
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">Username</th>
-                            <th scope="col">Phone No</th>
-                            <th scope="col">Creation Date</th>
+                            <th scope="col">Model</th>
+                            <th scope="col">Registration No.</th>
+                            <th scope="col">Created On</th>
+                            <th scope="col">Updated On</th>
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($users as $user)
-                            <tr onclick="getUserTransactions({{$user}});">
-                                <td>{{$user->id}}</td>
-                                <td>{{$user->name}}</td>
-                                <td>{{$user->phone_no}}</td>
-                                <td>{{$user->created_at}}</td>
-                                <td><div class="row">
+                        @foreach($vehicles as $vehicle)
+                            <tr onclick="getVehicleTransactions({{$vehicle}});">
+                                <td>{{$vehicle->id}}</td>
+                                <td>{{$vehicle->model}}</td>
+                                <td>{{$vehicle->reg_no}}</td>
+                                <td>{{$vehicle->created_at}}</td>
+                                <td>{{$vehicle->updated_at}}</td>                       
+                                <td>
+                                    <div class="row">
                                         <span class="mr-1">
                                             <button type="submit" class="btn btn-primary"
-                                                onclick="updateValues({{$user}});" 
-                                                data-toggle="modal" data-target="#updateUserModal">
+                                                onclick="updateValues({{$vehicle}});" 
+                                                data-toggle="modal" data-target="#updateVehicleModal">
                                                 <i class="fa fa-edit"></i>
                                             </button>
                                         </span>
                                         <span class="ml-1">
                                             <button type="submit" class="btn btn-danger"
-                                                onclick="confirmDelete({{$user}});"
+                                                onclick="confirmDelete({{$vehicle}});"
                                                 data-toggle="modal" data-target="#confirmDeleteModal">
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         </span>     
-                                    </div>      </td>
+                                    </div>                                                     
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -56,36 +60,30 @@
             
         </div>
     </body>
-
-    <!-- Create User Modal -->
-    <div class="modal fade" id="createUserModal" tabindex="-1" role="dialog"
-        aria-labelledby="createUserModalLabel" aria-hidden="true">
+    
+<!-- Create Vehicle Modal -->
+    <div class="modal fade" id="createVehicleModal" tabindex="-1" role="dialog"
+        aria-labelledby="createVehicleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="createUserModalTitle">Create User</h5>
+                    <h5 class="modal-title" id="createVehicleModalTitle">Create Vehicle</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="createUserForm">
+                <form id="createVehicleForm">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label class="form-label" for="nameTextField"> Name
-                                <input type="text" class="form-control" id="nameTextField"
-                                    name="name" placeholder="User Name" required>
+                            <label class="form-label" for="modelTextField"> Model
+                                <input type="text" class="form-control" id="modelTextField"
+                                    name="model" placeholder="Vehicle Model" required>
                             </label>
                         </div>
                         <div class="form-group">
-                            <label class="form-label" for="passwordField"> Password
-                                <input type="password" class="form-control" id="passwordField"
-                                    name="password" placeholder="User Name" required>
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="phoneTextField"> Phone
-                                <input type="text" class="form-control" id="phoneTextField"
-                                    name="phone_no" placeholder="User Phone Number" required>
+                            <label class="form-label" for="registrationNoTextField"> Registration Number
+                                <input type="text" class="form-control" id="registrationNoTextField"
+                                    name="registrationNo" placeholder="Vehicle Registration Number" required>
                             </label>
                         </div>
                     </div>
@@ -100,29 +98,29 @@
         </div>
     </div>
 
-    <!-- Update User Modal -->
-    <div class="modal fade" id="updateUserModal" tabindex="-2" role="dialog"
-        aria-labelledby="updateUserModalLabel" aria-hidden="true">
+    <!-- Update Vehicle Modal -->
+    <div class="modal fade" id="updateVehicleModal" tabindex="-2" role="dialog"
+        aria-labelledby="updateVehicleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="updateUserModalTitle">Update User</h5>
+                    <h5 class="modal-title" id="updateVehicleModalTitle">Update Vehicle</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="updateUserForm">
+                <form id="updateVehicleForm" method="post">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label class="form-label" for="updateNameTextField"> Name
-                                <input type="text" class="form-control" id="updateNameTextField"
-                                    name="name" placeholder="User Name" required>
+                            <label class="form-label" for="updateModelTextField"> Model
+                                <input type="text" class="form-control" id="updateModelTextField"
+                                    name="model" placeholder="Vehicle Model" required>
                             </label>
                         </div>
                         <div class="form-group">
-                            <label class="form-label" for="updatePhoneTextField"> Phone
-                                <input type="text" class="form-control" id="updatePhoneTextField"
-                                    name="phone_no" placeholder="User Phone Number" required>
+                            <label class="form-label" for="updateRegistrationNoTextField"> Registration Number
+                                <input type="text" class="form-control" id="updateRegistrationNoTextField"
+                                    name="registrationNo" placeholder="Vehicle Registration Number" required>
                             </label>
                         </div>
                     </div>
@@ -143,18 +141,18 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Confirm Delete User</h5>
+                    <h5 class="modal-title">Confirm Delete Vehicle</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                     <div class="modal-body">
-                        <h4 id="confirmDeleteQuestion">Are you sure you want to delete user</h4>
+                        <h4 id="confirmDeleteQuestion">Are you sure you want to delete vehicle</h4>
                     </div>
                     <div class="modal-footer">
                         <div class="form-group">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button id="deleteUserButton" class="btn btn-danger" type="submit">Delete</button>
+                            <button id="deleteVehicleButton" class="btn btn-danger" type="submit">Delete</button>
                         </div>
                     </div>
             </div>
@@ -163,7 +161,7 @@
 
     <!-- Message Modal -->
     <div class="modal fade" id="messageModal" tabindex="-3" role="dialog"
-        aria-labelledby="updateUserModalLabel" aria-hidden="true">
+        aria-labelledby="updateVehicleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -181,8 +179,7 @@
                     <div class="form-group">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
-                </div>
-               
+                </div>               
             </div>
         </div>
     </div>
@@ -194,7 +191,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="transactionsModalTitle">
-                        <i id="transactionTitleIcon" class="fas fa-user"></i>
+                        <i id="transactionTitleIcon" class="fas fa-car"></i>
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -203,7 +200,7 @@
                 <div class="modal-body">
                    <table class="table table-striped">
                         <thead>
-                            <th>Vehicle Registration</th>
+                            <th>User Name</th>
                             <th>Pass Name</th>
                             <th>Bank Transaction ID</th>
                             <th>Amount</th>
@@ -224,17 +221,17 @@
     </div>
 </html>
 <script>
-    var selectedUser
+    var selectedVehicle
     $(document).ready(function () {
-        $("#createUserForm").submit(function(event) {
+        $("#createVehicleForm").submit(function(event) {
             event.preventDefault();
             $.ajax({
-                url: "/admin/create-user",
+                url: "/admin/create-vehicle",
                 method: "POST",
                 dataType: 'json',
                 data: $(this).serialize(),
                 success: function(data) {
-                    $('#createUserModal').modal('hide');
+                    $('#createVehicleModal').modal('hide');
                     document.getElementById("responseMessage").textContent += data.message;               
                     $('#messageModal').modal('show');
                 },
@@ -245,15 +242,15 @@
             });
         });
 
-        $("#updateUserForm").submit(function(event) {
+        $("#updateVehicleForm").submit(function(event) {
             event.preventDefault();
             $.ajax({
+                url: "/admin/update-vehicle/"+selectedVehicle.id,
                 method: "PUT",
-                url: "/admin/update-user/"+selectedUser.id,
                 dataType: 'json',
                 data: $(this).serialize(),
                 success: function(data) {
-                    $('#updateUserModal').modal('hide');
+                    $('#updateVehicleModal').modal('hide');
                     document.getElementById("responseMessage").textContent += data.message;               
                     $('#messageModal').modal('show');
                 },
@@ -264,10 +261,10 @@
             });
         });
 
-        $('#deleteUserButton').click(function (event) {
+        $('#deleteVehicleButton').click(function (event) {
             event.preventDefault();
             $.ajax({
-                url: "/admin/delete-user/" + selectedUser.id,
+                url: "/admin/delete-vehicle/" + selectedVehicle.id,
                 method: 'DELETE',
                 dataType: 'json',
                 success: function(data) {
@@ -287,27 +284,27 @@
         });
     });
 
-    function updateValues(user) {
-        selectedUser = user;
-        document.getElementById("updateNameTextField").value    = user.name;
-        document.getElementById("updatePhoneTextField").value   = user.phone_no;       
+    function updateValues(vehicle) {
+        selectedVehicle = vehicle;
+        document.getElementById("updateModelTextField").value           = vehicle.model;
+        document.getElementById("updateRegistrationNoTextField").value  = vehicle.reg_no;
     }
 
-    function confirmDelete(user) {
-        selectedUser = user;
-        document.getElementById("confirmDeleteQuestion").textContent += " " + user.name + " ?";
+    function confirmDelete(vehicle) {
+        selectedVehicle = vehicle;
+        document.getElementById("confirmDeleteQuestion").textContent += " " + vehicle.reg_no + " ?";
     }
 
-    function getUserTransactions(user) {
+    function getVehicleTransactions(vehicle) {
         var htmlData = "";
-        $("#transactionTitleIcon").append(" " + user.name);
+        $("#transactionTitleIcon").append(" " + vehicle.reg_no);
         $.ajax({
-                url: "/admin/transactions-by-user/" + user.id,
+                url: "/admin/transactions-by-vehicle/" + vehicle.id,
                 method: 'GET',
                 dataType: 'json',
                 success: function(data) {
                     $.each(data.transactions, function(index, itemData) {
-                        htmlData = "<td>"+itemData.vehicle_reg_no+"</td>" 
+                        htmlData = "<td>"+itemData.username+"</td>" 
                         htmlData += "<td>"+itemData.item_name+"</td>" 
                         htmlData += "<td>"+itemData.bank_transaction_id+"</td>" 
                         htmlData += "<td>"+itemData.amount+"</td>" 

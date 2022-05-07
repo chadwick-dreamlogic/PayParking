@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Agent;
-use App\Models\Package;
-use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Controllers\Controller;
@@ -24,17 +22,18 @@ class AgentController extends Controller
             'phone_no'          => $request->phone_no,
             'username'          => $request->username,
         ];   
-        // creating agent object to store data since password_hash is a hidden field, thus cannot be assigned directly using create($data)  
+        // creating agent object to store data since password_hash is a hidden field,
+        // thus cannot be assigned directly using create($data)  
         $agent = new Agent($data);    
         $agent->password_hash = $data["password_hash"];
         $agent->save();
-        return redirect('/admin/agents', 201);
+        return response()->json(['message' => 'Agent registered successfully'], 201);
     }
 
     public function listAgents()
     {
         $agents = Agent::all();
-        return view('pages/agents', ['agents' => $agents, 'path'=>'agents']);
+        return view('pages/agents', ['agents' => $agents, 'path'=>'agents', 'message' => 'null']);
     }
 
     public function updateAgent($id, Request $request) {
@@ -54,13 +53,13 @@ class AgentController extends Controller
             ]);
         }       
         $agent->update($request->all());
-        return redirect('/admin/agents');
+        return response()->json(['message' => 'Agent updated successfully'], 200);
     }
 
     public function deleteAgent($id)
     {
         $result = Agent::findOrFail($id)->delete();
-        return redirect('/admin/agents');
+        return response()->json(['message' => 'Agent deleted successfully'], 200);
     }
     
 }

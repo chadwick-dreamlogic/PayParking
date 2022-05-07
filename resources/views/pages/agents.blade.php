@@ -9,7 +9,8 @@
             @include('includes.header')
             <div id="content" class="container-fluid">
                 <div class="my-1">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createAgentModal">
+                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                        data-target="#createAgentModal">
                         Create Agent
                     </button>
                 </div>
@@ -35,18 +36,18 @@
                                 <td>{{$agent->created_at}}</td>
                                 <td><div class="row">
                                         <span class="mr-1">
-                                            <button type="submit" class="btn btn-primary" onclick="updateValues({{$agent}});" 
+                                            <button type="submit" class="btn btn-primary"
+                                                onclick="updateValues({{$agent}});" 
                                                 data-toggle="modal" data-target="#updateAgentModal">
                                                 <i class="fa fa-edit"></i>
                                             </button>
                                         </span>
                                         <span class="ml-1">
-                                            <form action="/admin/delete-agent/{{$agent->id}}" method="POST">
-                                                <input type="hidden" name="_method" value="delete">
-                                                <button type="submit" class="btn btn-danger">
-                                                    <i class="fa fa-trash"></i>
-                                                </button>
-                                            </form>
+                                            <button type="submit" class="btn btn-danger"
+                                                onclick="confirmDelete({{$agent}});"
+                                                data-toggle="modal" data-target="#confirmDeleteModal">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
                                         </span>     
                                     </div>      </td>
                             </tr>
@@ -69,30 +70,30 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="/admin/create-agent" method="post">
+                <form id="createAgentForm">
                     <div class="modal-body">
                         <div class="form-group">
                             <label class="form-label" for="nameTextField"> Name
-                                <input type="text" class="form-control" id="nameTextField" name="name"
-                                    placeholder="Agent Name" required>
+                                <input type="text" class="form-control" id="nameTextField"
+                                name="name" placeholder="Agent Name" required>
                             </label>
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="usernameTextField"> Username
-                                <input type="text" class="form-control" id="usernameTextField" name="username"
-                                    placeholder="Agent Username" required>
+                                <input type="text" class="form-control" id="usernameTextField"
+                                name="username" placeholder="Agent Username" required>
                             </label>
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="passwordField"> Password
-                                <input type="password" class="form-control" id="passwordField" name="password"
-                                    placeholder="Agent Name" required>
+                                <input type="password" class="form-control" id="passwordField"
+                                    name="password" placeholder="Agent Name" required>
                             </label>
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="phoneTextField"> Phone
-                                <input type="text" class="form-control" id="phoneTextField" name="phone_no"
-                                    placeholder="Agent Phone Number" required>
+                                <input type="text" class="form-control" id="phoneTextField"
+                                    name="phone_no" placeholder="Agent Phone Number" required>
                             </label>
                         </div>                       
                     </div>
@@ -117,25 +118,24 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="updateAgentForm" method="post">
-                    <input type="hidden" name="_method" value="put">
+                <form id="updateAgentForm">
                     <div class="modal-body">
                         <div class="form-group">
                             <label class="form-label" for="updateNameTextField"> Name
-                                <input type="text" class="form-control" id="updateNameTextField" name="name"
-                                    placeholder="Agent Name" required>
+                                <input type="text" class="form-control" id="updateNameTextField"
+                                    name="name" placeholder="Agent Name" required>
                             </label>
                         </div>                        
                         <div class="form-group">
                             <label class="form-label" for="updateUsernameTextField"> Username
-                                <input type="text" class="form-control" id="updateUsernameTextField" name="username"
-                                    placeholder="Agent Username" required>
+                                <input type="text" class="form-control" id="updateUsernameTextField"
+                                    name="username" placeholder="Agent Username" required>
                             </label>
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="updatePhoneTextField"> Phone
-                                <input type="text" class="form-control" id="updatePhoneTextField" name="phone_no"
-                                    placeholder="Agent Phone Number" required>
+                                <input type="text" class="form-control" id="updatePhoneTextField"
+                                    name="phone_no" placeholder="Agent Phone Number" required>
                             </label>
                         </div>
                     </div>
@@ -150,11 +150,129 @@
         </div>
     </div>
 </html>
+
+    <!-- Confirm Delete Modal -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog"
+        aria-labelledby="confirmDeleteModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Delete Agent</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                    <div class="modal-body">
+                        <h4 id="confirmDeleteQuestion">Are you sure you want to delete agent</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button id="deleteAgentButton" class="btn btn-danger" type="submit">Delete</button>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Modal -->
+    <div class="modal fade" id="messageModal" tabindex="-3" role="dialog"
+        aria-labelledby="updateAgentModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-success" id="messageModalTitle">
+                        Success <i class="fas fa-check"></i> 
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>                
+                <div class="modal-body">
+                   <p id="responseMessage"></p> 
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>               
+            </div>
+        </div>
+    </div>
+
 <script>
+    var selectedAgent
+    $(document).ready(function () {
+        $("#createAgentForm").submit(function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: "/admin/create-agent",
+                method: "POST",
+                dataType: 'json',
+                data: $(this).serialize(),
+                success: function(data) {
+                    $('#createAgentModal').modal('hide');
+                    document.getElementById("responseMessage").textContent += data.message;               
+                    $('#messageModal').modal('show');
+                },
+                error: function(error) {
+                    alert("error");
+                    console.log(error);
+                }
+            });
+        });
+
+        $("#updateAgentForm").submit(function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: "/admin/update-agent/"+selectedAgent.id,
+                method: "PUT",
+                dataType: 'json',
+                data: $(this).serialize(),
+                success: function(data) {
+                    $('#updateAgentModal').modal('hide');
+                    document.getElementById("responseMessage").textContent += data.message;               
+                    $('#messageModal').modal('show');
+                },
+                error: function(error) {
+                    alert("error");
+                    console.log(error);
+                }
+            });
+        });
+
+        $('#deleteAgentButton').click(function (event) {
+            event.preventDefault();
+            $.ajax({
+                url: "/admin/delete-agent/" + selectedAgent.id,
+                method: 'DELETE',
+                dataType: 'json',
+                success: function(data) {
+                    $('#confirmDeleteModal').modal('hide');
+                    document.getElementById("responseMessage").textContent += data.message;               
+                    $('#messageModal').modal('show');
+                },
+                error: function(error) {
+                    alert(error);
+                }
+            });
+        });
+
+        $("#messageModal").on('hide.bs.modal', function(){
+            location.reload();
+            document.getElementById("responseMessage").textContent = "";
+        });
+    });
+
     function updateValues(agent) {
-        document.getElementById("updateAgentForm").action           = "/admin/update-agent/"+agent.id
+        selectedAgent = agent;
         document.getElementById("updateNameTextField").value        = agent.name;
         document.getElementById("updatePhoneTextField").value       = agent.phone_no;
         document.getElementById("updateUsernameTextField").value    = agent.username;        
+    }
+
+    function confirmDelete(agent) {
+        selectedAgent = agent;
+        document.getElementById("confirmDeleteQuestion").textContent += " " + agent.name + " ?";
     }
 </script>

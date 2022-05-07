@@ -41,4 +41,12 @@ $router->group(['prefix' => 'admin'], function () use ($router) {
     $router->post('create-agent', 'Admin\AgentController@createAgent');
     $router->put('update-agent/{id}', 'Admin\AgentController@updateAgent');
     $router->delete('delete-agent/{id}', 'Admin\AgentController@deleteAgent');
+
+    $router->get('vehicles', 'Admin\VehicleController@listVehicles');
+    $router->post('create-vehicle', 'Admin\VehicleController@createVehicle');
+    $router->put('update-vehicle/{id}', 'Admin\VehicleController@updateVehicle');
+    $router->delete('delete-vehicle/{id}', 'Admin\VehicleController@deleteVehicle');
+
+    $router->get('transactions-by-vehicle/{vehicle_id}', 'Admin\TransactionController@getTransactionByVehicleId');
+    $router->get('transactions-by-user/{user_id}', 'Admin\TransactionController@getTransactionByUserId');
 });

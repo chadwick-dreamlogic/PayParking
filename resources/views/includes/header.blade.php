@@ -11,12 +11,10 @@
         <h3>Pay Parking</h3>
         <strong>PP</strong>
     </div>
-
-    <hr class="bg-light">
     
     <ul class="list-unstyled components">
         @if($path == 'home')
-            <li class="text-dark bg-light">
+            <li class="active bg-light">
                 <a href="home" aria-expanded="false">
                     <i class="fas fa-home"></i>
                     Home
@@ -32,7 +30,7 @@
         @endif
 
         @if($path == 'packages')
-            <li class="text-dark bg-light">
+            <li class="active bg-light">
                 <a href="packages">
                     <i class="fas fa-briefcase"></i>
                     Packages
@@ -48,7 +46,7 @@
         @endif
             
         @if($path == 'users')
-            <li class="text-dark bg-light">
+            <li class="active bg-light">
                 <a href="users">
                     <i class="fas fa-users"></i>
                     Users
@@ -64,7 +62,7 @@
         @endif
             
         @if($path == 'agents')
-            <li class="text-dark bg-light">
+            <li class="active bg-light">
                 <a href="agents">
                     <i class="fas fa-user-tie"></i>
                     Agents
@@ -79,6 +77,21 @@
             </li>
         @endif
             
+        @if($path == 'vehicles')
+            <li class="active bg-light">
+                <a href="vehicles">
+                    <i class="fas fa-car"></i>
+                    Vehicles
+                </a>
+            </li>
+        @else
+            <li>
+                <a href="vehicles">
+                    <i class="fas fa-car"></i>
+                    Vehicles
+                </a>
+            </li>
+        @endif
 
     </ul>
 

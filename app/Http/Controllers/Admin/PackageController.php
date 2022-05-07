@@ -21,13 +21,13 @@ class PackageController extends Controller
             'price'     => $request->price
         ];    
         $package = Package::create($data);
-        return redirect('/admin/packages', 201);
+        return response()->json(['message' => 'Package registered successfully'], 201);
     }
 
     public function listPackages()
     {
         $packages = Package::all();
-        return view('pages/packages', ['packages' => $packages, 'path'=>'packages']);
+        return view('pages/packages', ['packages' => $packages, 'path'=>'packages', 'message' => 'null']);
     }
 
     public function updatePackage($id, Request $request) {
@@ -38,13 +38,13 @@ class PackageController extends Controller
         ]); 
         $package = Package::findOrFail($id);
         $package->update($request->all());
-        return redirect('/admin/packages');
+        return response()->json(['message' => 'Package updated successfully'], 200);
     }
 
     public function deletePackage($id)
     {
         $result = Package::findOrFail($id)->delete();
-        return redirect('/admin/packages');
+        return response()->json(['message' => 'Package deleted successfully'], 200);
     }
 
 }
